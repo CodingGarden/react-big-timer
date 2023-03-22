@@ -12,13 +12,11 @@ let seconds = safeParseNumber(params.seconds);
 let fontSize = '20vw';
 
 if (params.time) {
-  const parts = params.time.match(/(\d+)h(\d+)m(\d+)s/);
-  if (parts) {
-    const [, hours, minutes, s] = parts;
-    params.hours = hours;
-    params.minutes = minutes;
-    seconds = safeParseNumber(s);
-  }
+
+  seconds = safeArray.from(params.time.matchAll(/(\d+[hms])/g)).reduce((sum, [raw]) => {
+    const [n, x] = [raw.slice(0, -1), raw.at(-1)];
+    return sum + (n * (x == "h" ? 3600 : (x == "m" ? 60 : 1)))
+  }, 0);
 }
 
 if (params.hours) {
