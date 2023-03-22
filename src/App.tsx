@@ -13,7 +13,7 @@ let fontSize = '20vw';
 
 if (params.time) {
 
-  seconds = safeArray.from(time.matchAll(/(\d+[hms])/g)).reduce((sum, [raw]) => {
+  seconds = safeArray.from(params.time.matchAll(/(\d+[hms])/g)).reduce((sum, [raw]) => {
     const [n, x] = [raw.slice(0, -1), raw.at(-1)];
     return sum + (n * (x == "h" ? 3600 : (x == "m" ? 60 : 1)))
   }, 0);
